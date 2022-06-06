@@ -20,10 +20,6 @@ router.get('/checkadmin', verifyAdmin, (req, res, next) => {
   res.send('hello admin, you are logged in and you can delete all accounts');
 });
 
-router.get('/', (req, res) => {
-  res.send('Hello, this is users endpoint');
-});
-
 router.get('/register', (req, res) => {
   res.send('Hello, this is users register endpoint');
 });
