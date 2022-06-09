@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  createUser,
   updateUser,
   deleteUser,
   getUser,
@@ -20,9 +21,8 @@ router.get('/checkadmin', verifyAdmin, (req, res, next) => {
   res.send('hello admin, you are logged in and you can delete all accounts');
 });
 
-router.get('/register', (req, res) => {
-  res.send('Hello, this is users register endpoint');
-});
+//CREATE
+router.post('/register', createUser);
 
 // UPDATE
 router.put('/:id', verifyUser, updateUser);

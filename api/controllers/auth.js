@@ -23,6 +23,8 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
+    console.log(`hitting this login route with user id ${req.body.username}`);
+
     const user = await User.findOne({ username: req.body.username });
 
     if (!user) return next(createError(404, 'User not found'));
@@ -39,6 +41,8 @@ export const login = async (req, res, next) => {
       { id: user._id, isAdmin: user.isAdmin },
       process.env.JWT
     );
+
+    console.log('here still okß');
 
     const { password, isAdmin, ...otherDetails } = user._doc;
     res

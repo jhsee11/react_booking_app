@@ -43,8 +43,18 @@ export const updateRoom = async (req, res, next) => {
 };
 
 export const deleteRoom = async (req, res, next) => {
+  const hotelId = req.params.hotelid;
   try {
     await Room.findByIdAndDelete(req.params.id);
+
+    try {
+      await Hotel.findByIdAndUpdate(hotelId, {
+        $pull: { rooms: req.params.id },
+      });
+    } catch (err) {
+      next(err);
+    }
+
     res.status(200).json('Room has been deleted');
   } catch (err) {
     next(err);
@@ -67,6 +77,14 @@ export const getRooms = async (req, res, next) => {
   } catch (err) {
     //if (failed) return next(createError(401, 'You are not authenticated !'));
     //res.status(500).json(err);
+    next(err);
+  }
+};
+
+export const updateRoomAvailability = async (req, res, next) => {
+  try {
+    await Room.updateOne({ 'roomNumber._id': req.params.id });
+  } catch (err) {
     next(err);
   }
 };
